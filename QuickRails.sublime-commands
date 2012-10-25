@@ -1,0 +1,10 @@
+[
+    {
+      "caption": "QuickRails: Generators",
+      "command": "quick_rails_generators"
+    },
+    {
+      "caption": "QuickRails: Rake Tasks",
+      "command": "quick_rails_rake_tasks"
+    }
+]
