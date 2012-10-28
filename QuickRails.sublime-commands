@@ -6,5 +6,9 @@
     {
       "caption": "QuickRails: Rake Tasks",
       "command": "quick_rails_rake_tasks"
+    },
+    {
+      "caption": "QuickRails: Bundle Install",
+      "command": "quick_rails_bundle_install"
     }
 ]

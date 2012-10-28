@@ -17,7 +17,7 @@ class QuickRailsGeneratorsCommand(QuickRailsWindowCommand):
     self.window.show_input_panel("rails generate", argument + " ", lambda s: self.run_generator(s), None, None)
 
   def run_generator(self, argument):
-    command = 'rails generate {thing}'.format(thing=argument)
+    command = 'rails generate ', argument
     self.run_shell_command(command, self.window.folders()[0])
 
   def get_available_generators(self):
