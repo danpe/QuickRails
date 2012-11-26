@@ -1,8 +1,8 @@
 import sublime, sublime_plugin
 import re
-import os
-import os.path
+import os, sys
 import time
+import QuickExec
 
 rails_root_cache = {}
 
@@ -41,7 +41,6 @@ def get_idea(directory):
   root = rails_root(directory)
   return os.path.join(root, '.idea')
 
-
 class QuickRailsWindowCommand(sublime_plugin.WindowCommand):
   def active_view(self):
     return self.window.active_view()
@@ -70,6 +69,17 @@ class QuickRailsWindowCommand(sublime_plugin.WindowCommand):
     if self._active_file_name() or len(self.window.folders()) == 1:
       return rails_root(self.get_working_dir())
 
+  def run_quick_command(self, command, working_dir, listener):
+    if not command:
+      return False
+    self.window.run_command("quick_exec", {
+      "cmd": [command],
+      "shell": True,
+      "listenerid": id(listener),
+      "working_dir": working_dir
+    })
+    return True
+
   def run_shell_command(self, command, working_dir):
     if not command:
       return False
@@ -79,5 +89,5 @@ class QuickRailsWindowCommand(sublime_plugin.WindowCommand):
       "working_dir": working_dir,
       "file_regex": r"([^ ]*\.rb):?(\d*)"
     })
-    self.display_results()
+    #self.display_results()
     return True
