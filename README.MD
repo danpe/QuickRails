@@ -11,6 +11,10 @@ Now you got it !
 * Quick Rake Tasks (SOON)
 * Quick Bundle Install
 
+## QuickRails 1.0.2
+
+Added update support to update latest generators list
+
 ## QuickRails 1.0.1
 
 Added QuickRails Bundle Install
