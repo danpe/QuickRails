@@ -16,7 +16,7 @@ def rails_root(directory):
         return rails_root_cache[leaf_dir]['retval']
 
     while directory:
-        if os.path.exists(os.path.join(directory, '.idea')):
+        if os.path.exists(os.path.join(directory, 'Gemfile')):
             retval = directory
             break
         parent = os.path.realpath(os.path.join(directory, os.path.pardir))
@@ -39,6 +39,8 @@ def rails_root_exist(directory):
 
 def get_idea(directory):
   root = rails_root(directory)
+  if not os.path.exists(os.path.join(root, '.idea')):
+    os.makedirs(os.path.join(root, '.idea'))
   return os.path.join(root, '.idea')
 
 class QuickRailsWindowCommand(sublime_plugin.WindowCommand):

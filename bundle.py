@@ -3,7 +3,7 @@ import re
 
 import sublime
 from QuickRails import QuickRailsWindowCommand, rails_root
-import add
+#import add
 
 class QuickRailsBundleInstallCommand(QuickRailsWindowCommand):
   def run(self):
