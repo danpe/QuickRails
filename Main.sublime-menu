@@ -1,0 +1,28 @@
+[
+    {
+        "caption": "Tools",
+        "mnemonic": "n",
+        "id": "tools",
+        "children":
+        [
+            {
+				"caption": "Quick Rails",
+				"children":
+				[
+					{
+						"caption": "Run generator...",
+						"command": "quick_rails_generators"
+					},
+					{
+						"caption": "Run rake task...",
+						"command": "quick_rails_rake_tasks"
+					},
+					{
+						"caption": "Run bundle install...",
+						"command": "quick_rails_bundle_install"
+					}
+				]
+            }
+        ]
+    }
+]
