@@ -87,7 +87,7 @@ class AsyncProcess(object):
       else:
         self.proc.stdout.close()
         if self.listener:
-          self.listener.on_finished(self, self.alldata)
+          sublime.set_timeout(lambda: self.listener.on_finished(self, self.alldata), 0)
         break
 
   def read_stderr(self):
