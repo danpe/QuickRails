@@ -1,0 +1,24 @@
+## Change Log:
+
+### QuickRails 1.0.4
+#### 2013-06-20
+
+* Added RVM & RBENV support!
+* Added Quick Capistrano Tasks!
+
+### QuickRails 1.0.3
+#### 2013-05-25
+
+* Added rake tasks !
+* Works also if no .idea folder exists.
+* Fixed error in Sublime 2.0.1.
+
+### QuickRails 1.0.2
+#### 2012-11-26
+
+* Added update support to update latest generators list
+
+### QuickRails 1.0.1
+#### 2012-10-28
+
+* Added QuickRails Bundle Install

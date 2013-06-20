@@ -26,6 +26,12 @@ Configure the following options in `QuickRails.sublime-settings` file in order t
 
 ## Change Log:
 
+### QuickRails 1.0.4
+#### 2013-06-20
+
+* Added RVM & RBENV support!
+* Added Quick Capistrano Tasks!
+
 ### QuickRails 1.0.3
 #### 2013-05-25
 
@@ -37,11 +43,6 @@ Configure the following options in `QuickRails.sublime-settings` file in order t
 #### 2012-11-26
 
 * Added update support to update latest generators list
-
-### QuickRails 1.0.1
-#### 2012-10-28
-
-* Added QuickRails Bundle Install
 
 
 ### credits:
