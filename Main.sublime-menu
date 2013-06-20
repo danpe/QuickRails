@@ -10,7 +10,7 @@
 				"children":
 				[
 					{
-						"caption": "Run generator...",
+						"caption": "Run generators...",
 						"command": "quick_rails_generators"
 					},
 					{
