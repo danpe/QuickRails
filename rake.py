@@ -22,9 +22,9 @@ class QuickRailsRakeTasksCommand(QuickRailsWindowCommand, ProcessListener):
 
   def on_finished(self, proc, alldata):
     if alldata:
-      gens = self.parse_rake_tasks(alldata)
-      self.write_gens_to_file(gens)
-      #self.window.show_quick_panel(gens, self.on_selected)
+      tasks = self.parse_rake_tasks(alldata)
+      self.write_tasks_to_file(tasks)
+      #self.window.show_quick_panel(tasks, self.on_selected)
 
   def rake(self, argument):
     self.window.show_input_panel("rake ", argument + " ", lambda s: self.run_rake_task(s), None, None)
@@ -38,7 +38,7 @@ class QuickRailsRakeTasksCommand(QuickRailsWindowCommand, ProcessListener):
     print rtsk
     return rtsk
 
-  def write_gens_to_file(self, rtsk):
+  def write_tasks_to_file(self, rtsk):
     rtsk.sort()
     data = "\n".join(rtsk)
     f = open(os.path.join(get_idea(self.get_working_dir()), '.rakeTasks'), 'w')

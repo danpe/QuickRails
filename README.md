@@ -16,6 +16,7 @@ Now you got it !
 Simply open a Rails project with your Sublime Text 2 and use the following shortcuts:
 * `CTRL+ALT+B` Bundle Install
 * `CTRL+ALT+G` Generators
+* `CTRL+ALT+C` Capistrano Tasks
 * `CTRL+ALT+R` Rake Tasks
 
 **RVM (default) & RBENV**
