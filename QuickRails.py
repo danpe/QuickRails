@@ -43,6 +43,19 @@ def get_idea(directory):
     os.makedirs(os.path.join(root, '.idea'))
   return os.path.join(root, '.idea')
 
+def command_with_ruby_env(cmd):
+  s = sublime.load_settings("QuickRails.sublime-settings")
+
+  rvm_cmd = os.path.expanduser('~/.rvm/bin/rvm-auto-ruby')
+  rbenv_cmd = os.path.expanduser('~/.rbenv/bin/rbenv')
+
+  if s.get("check_for_rvm") and is_executable(rvm_cmd):
+    return rvm_cmd + ' -S ' + cmd
+  if s.get("check_for_rbenv") and is_executable(rbenv_cmd):
+    return rbenv_cmd + ' exec ' + cmd
+  else:
+    return cmd
+
 class QuickRailsWindowCommand(sublime_plugin.WindowCommand):
   def active_view(self):
     return self.window.active_view()
@@ -75,7 +88,7 @@ class QuickRailsWindowCommand(sublime_plugin.WindowCommand):
     if not command:
       return False
     self.window.run_command("quick_exec", {
-      "cmd": [command],
+      "cmd": [command_with_ruby_env(command)],
       "shell": True,
       "listenerid": id(listener),
       "working_dir": working_dir
@@ -86,7 +99,7 @@ class QuickRailsWindowCommand(sublime_plugin.WindowCommand):
     if not command:
       return False
     self.window.run_command("exec", {
-      "cmd": [command],
+      "cmd": [command_with_ruby_env(command)],
       "shell": True,
       "working_dir": working_dir,
       "file_regex": r"([^ ]*\.rb):?(\d*)"
