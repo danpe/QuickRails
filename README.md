@@ -47,3 +47,5 @@ Configure the following options in `QuickRails.sublime-settings` file in order t
 
 ### credits:
 @danpe, @driehle, @jonarrien
+
+[![githalytics.com alpha](https://cruel-carlota.pagodabox.com/43581e65be30db48aaa64884d350da44 "githalytics.com")](http://githalytics.com/danpe/QuickRails)
