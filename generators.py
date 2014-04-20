@@ -6,13 +6,20 @@ from QuickRails.QuickRails import QuickRailsWindowCommand, get_idea
 from QuickRails.QuickExec import ProcessListener
 
 class QuickRailsGeneratorsCommand(QuickRailsWindowCommand, ProcessListener):
+
+  def is_spring_available(self):
+    return os.path.isfile('spring') and os.access(fpath, os.X_OK)
+
   def run(self):
     self.generators = self.get_available_generators()
     self.window.show_quick_panel(self.generators, self.on_selected)
 
   def on_selected(self, selected):
     if selected == 0:
-      self.run_quick_command("rails g", self.window.folders()[0], self)
+      if self.is_spring_available:
+        self.run_quick_command("spring rails g", self.window.folders()[0], self)
+      else:
+        self.run_quick_command("rails g", self.window.folders()[0], self)
     elif selected > 0:
       self.generate(self.generators[selected])
 
