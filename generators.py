@@ -2,9 +2,8 @@ import os
 import re
 
 import sublime
-from QuickRails import QuickRailsWindowCommand, get_idea
-from QuickExec import ProcessListener
-#import add
+from QuickRails.QuickRails import QuickRailsWindowCommand, get_idea
+from QuickRails.QuickExec import ProcessListener
 
 class QuickRailsGeneratorsCommand(QuickRailsWindowCommand, ProcessListener):
   def run(self):
@@ -24,7 +23,7 @@ class QuickRailsGeneratorsCommand(QuickRailsWindowCommand, ProcessListener):
     if alldata:
       gens = self.parse_generators(alldata)
       self.write_gens_to_file(gens)
-      #self.window.show_quick_panel(gens, self.on_selected)
+      self.window.show_quick_panel(gens, self.on_selected)
 
   def generate(self, argument):
     self.window.show_input_panel("rails generate", argument + " ", lambda s: self.run_generator(s), None, None)
@@ -41,7 +40,7 @@ class QuickRailsGeneratorsCommand(QuickRailsWindowCommand, ProcessListener):
   def write_gens_to_file(self, gens):
     gens.sort()
     data = "\n".join(gens)
-    f = open(os.path.join(get_idea(self.get_working_dir()), '.generators'), 'w+')
+    f = open(os.path.join(get_idea(self.get_working_dir()), '.generators'), 'w')
     f.write(data)
     f.close()
 
@@ -51,8 +50,11 @@ class QuickRailsGeneratorsCommand(QuickRailsWindowCommand, ProcessListener):
       data = f.read()
       f.close()
       gens = data.split()
-      gens.insert(0, "Update...")
+      gens.insert(0, "Update rails generators...")
     except IOError:
       gens = "".split()
-      gens.insert(0, "Update...")
+      gens.insert(0, "Update rails generators...")
     return gens
+
+  def is_enabled(args):
+    return True

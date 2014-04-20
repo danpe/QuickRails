@@ -2,36 +2,37 @@ import sublime, sublime_plugin
 import re
 import os, sys
 import time
-import QuickExec
+import QuickRails.QuickExec
 
 rails_root_cache = {}
 
+
 def rails_root(directory):
-    global rails_root_cache
+  global rails_root_cache
 
-    retval = False
-    leaf_dir = directory
+  retval = False
+  leaf_dir = directory
 
-    if leaf_dir in rails_root_cache and rails_root_cache[leaf_dir]['expires'] > time.time():
-        return rails_root_cache[leaf_dir]['retval']
+  if leaf_dir in rails_root_cache and rails_root_cache[leaf_dir]['expires'] > time.time():
+    return rails_root_cache[leaf_dir]['retval']
 
-    while directory:
-        if os.path.exists(os.path.join(directory, 'Gemfile')):
-            retval = directory
-            break
-        parent = os.path.realpath(os.path.join(directory, os.path.pardir))
-        if parent == directory:
-            # /.. == /
-            retval = False
-            break
-        directory = parent
+  while directory:
+    if os.path.exists(os.path.join(directory, 'Gemfile')):
+      retval = directory
+      break
+    parent = os.path.realpath(os.path.join(directory, os.path.pardir))
+    if parent == directory:
+      # /.. == /
+      retval = False
+      break
+    directory = parent
 
-    rails_root_cache[leaf_dir] = {
-        'retval': retval,
-        'expires': time.time() + 5
-    }
+  rails_root_cache[leaf_dir] = {
+    'retval': retval,
+    'expires': time.time() + 5
+  }
 
-    return retval
+  return retval
 
 # for readability code
 def rails_root_exist(directory):
@@ -44,19 +45,23 @@ def get_idea(directory):
   return os.path.join(root, '.idea')
 
 def command_with_ruby_env(cmd):
+  rvm = os.path.expanduser('~/.rvm/bin/rvm-auto-ruby')
+  rbenv = os.path.expanduser('~/.rbenv/bin/rbenv')
   s = sublime.load_settings("QuickRails.sublime-settings")
 
-  rvm_cmd = os.path.expanduser('~/.rvm/bin/rvm-auto-ruby')
-  rbenv_cmd = os.path.expanduser('~/.rbenv/bin/rbenv')
-
-  if s.get("check_for_rvm") and is_executable(rvm_cmd):
-    return rvm_cmd + ' -S ' + cmd
-  if s.get("check_for_rbenv") and is_executable(rbenv_cmd):
-    return rbenv_cmd + ' exec ' + cmd
+  if s.get("check_for_rvm"):
+    return rvm + ' -S ' + cmd
+  elif s.get("check_for_rbenv"):
+    return rbenv + ' exec ' + cmd
   else:
     return cmd
 
+
+
 class QuickRailsWindowCommand(sublime_plugin.WindowCommand):
+  # def run(self, view, args):
+  #   print('Running QuickRails')
+
   def active_view(self):
     return self.window.active_view()
 

@@ -2,11 +2,12 @@ import os
 import re
 
 import sublime
-from QuickRails import QuickRailsWindowCommand, get_idea
-from QuickExec import ProcessListener
+from QuickRails.QuickRails import QuickRailsWindowCommand, get_idea
+from QuickRails.QuickExec import ProcessListener
 #import add
 
 class QuickRailsRakeTasksCommand(QuickRailsWindowCommand, ProcessListener):
+
   def run(self):
     self.rakeTasks = self.get_available_rake_tasks()
     self.window.show_quick_panel(self.rakeTasks, self.on_selected)
@@ -24,7 +25,7 @@ class QuickRailsRakeTasksCommand(QuickRailsWindowCommand, ProcessListener):
     if alldata:
       tasks = self.parse_rake_tasks(alldata)
       self.write_tasks_to_file(tasks)
-      #self.window.show_quick_panel(tasks, self.on_selected)
+      self.window.show_quick_panel(tasks, self.on_selected)
 
   def rake(self, argument):
     self.window.show_input_panel("rake ", argument + " ", lambda s: self.run_rake_task(s), None, None)
@@ -35,7 +36,6 @@ class QuickRailsRakeTasksCommand(QuickRailsWindowCommand, ProcessListener):
 
   def parse_rake_tasks(self, rake_tasks_result):
     rtsk = re.findall("rake ([\w:]+)", rake_tasks_result)
-    print rtsk
     return rtsk
 
   def write_tasks_to_file(self, rtsk):
@@ -51,8 +51,11 @@ class QuickRailsRakeTasksCommand(QuickRailsWindowCommand, ProcessListener):
       data = f.read()
       f.close()
       rtsk = data.split()
-      rtsk.insert(0, "Update...")
+      rtsk.insert(0, "Update rake tasks...")
     except IOError:
       rtsk = "".split()
-      rtsk.insert(0, "Update...")
+      rtsk.insert(0, "Update rake tasks...")
     return rtsk
+
+  def is_enabled(args):
+    return True

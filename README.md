@@ -13,7 +13,7 @@ Now you got it !
 
 ## How to use ?
 
-Simply open a Rails project with your Sublime Text 2 and use the following shortcuts:
+Simply open a Rails project with your Sublime Text 3 and use the following shortcuts:
 * `CTRL+ALT+B` Bundle Install
 * `CTRL+ALT+G` Generators
 * `CTRL+ALT+C` Capistrano Tasks
@@ -25,6 +25,11 @@ Configure the following options in `QuickRails.sublime-settings` file in order t
 * "check_for_rvm": true
 
 ## Change Log:
+
+### QuickRails 1.0.5
+#### 2014-04-20
+
+* Added ST3 Support
 
 ### QuickRails 1.0.4
 #### 2013-06-20

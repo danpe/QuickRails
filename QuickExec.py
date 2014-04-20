@@ -1,16 +1,18 @@
 import sublime, sublime_plugin
 import os, sys
-import thread
+import threading
+from threading import Thread
 import subprocess
 import functools
 import time
 import gc
 
+
 def objects_by_id(id_):
-    for obj in gc.get_objects():
-        if id(obj) == id_:
-            return obj
-    raise Exception("No found")
+  for obj in gc.get_objects():
+    if id(obj) == id_:
+      return obj
+  raise Exception("No found")
 
 class ProcessListener(object):
   def on_data(self, proc, data):
@@ -19,20 +21,20 @@ class ProcessListener(object):
   def on_finished(self, proc, alldata):
     pass
 
+
 # Encapsulates subprocess.Popen, forwarding stdout to a supplied
 # ProcessListener (on a separate thread)
 class AsyncProcess(object):
-  def __init__(self, arg_list, env, listener,
-            # "path" is an option in build systems
-            path="",
-            # "shell" is an options in build systems
-            shell=False):
-
+  # "path" is an option in build systems
+  # "shell" is an options in build systems
+  def __init__(self, arg_list, env, listener, path="", shell=False):
     self.listener = listener
     self.killed = False
 
     self.start_time = time.time()
-    self.alldata = ""
+    self.alldata = ''
+    self.stdout_thread = None
+    self.stderr_thread = None
 
     # Hide the console window on Windows
     startupinfo = None
@@ -49,20 +51,23 @@ class AsyncProcess(object):
 
     proc_env = os.environ.copy()
     proc_env.update(env)
-    for k, v in proc_env.iteritems():
+    # for k, v in proc_env.iteritems():
+    for k, v in tuple(proc_env.items()):
       proc_env[k] = os.path.expandvars(v).encode(sys.getfilesystemencoding())
 
     self.proc = subprocess.Popen(arg_list, stdout=subprocess.PIPE,
-        stderr=subprocess.PIPE, startupinfo=startupinfo, env=proc_env, shell=shell)
+      stderr=subprocess.PIPE, startupinfo=startupinfo, env=proc_env, shell=shell)
 
     if path:
-        os.environ["PATH"] = old_path
+      os.environ["PATH"] = old_path
 
     if self.proc.stdout:
-        thread.start_new_thread(self.read_stdout, ())
+      self.stdout_thread = Thread(target=self.read_stdout, args=())
+      self.stdout_thread.start()
 
     if self.proc.stderr:
-        thread.start_new_thread(self.read_stderr, ())
+      self.stderr_thread = Thread(target=self.read_stderr, args=())
+      self.stderr_thread.start()
 
   def kill(self):
     if not self.killed:
@@ -77,23 +82,22 @@ class AsyncProcess(object):
     return self.proc.poll()
 
   def read_stdout(self):
-    while True:
-      data = os.read(self.proc.stdout.fileno(), 2**15)
+    for row in self.proc.stdout.readlines():
+      self.alldata += str(row)
 
-      if data != "":
-        self.alldata += data
-        if self.listener:
-          self.listener.on_data(self, data)
-      else:
-        self.proc.stdout.close()
-        if self.listener:
-          sublime.set_timeout(lambda: self.listener.on_finished(self, self.alldata), 0)
-        break
+    self.listener.on_data(self, self.alldata)
+    self.proc.stdout.close()
+    self.proc.stderr.close()
+    # self.stdout_thread = None
+    # self.stderr_thread = None
+    self.proc.terminate()
+    sublime.set_timeout(lambda: self.listener.on_finished(self, self.alldata), 0)
 
   def read_stderr(self):
+    data = ''
     while True:
-      data = os.read(self.proc.stderr.fileno(), 2**15)
-
+      for row in self.proc.stderr.readlines():
+        data += row
       if data != "":
         if self.listener:
           self.listener.on_data(self, data)
@@ -126,8 +130,7 @@ class QuickExecCommand(sublime_plugin.WindowCommand, ProcessListener):
     self.encoding = encoding
 
     self.proc = None
-    print "Running " + " ".join(cmd)
-    sublime.status_message("Building")
+    sublime.status_message("BUILDING")
 
     merged_env = env.copy()
     if self.window.active_view():
@@ -145,7 +148,7 @@ class QuickExecCommand(sublime_plugin.WindowCommand, ProcessListener):
       err_type = WindowsError
 
     if not listener:
-      print "Oh shit..."
+      print("Oh shit...")
       listener = self
 
     try:
