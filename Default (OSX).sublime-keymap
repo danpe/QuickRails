@@ -10,4 +10,7 @@
 }, {
     "keys": ["ctrl+alt+r"],
     "command": "quick_rails_rake_tasks"
+}, {
+    "keys": ["ctrl+alt+v"],
+    "command": "quick_rails_gotoview"
 }]

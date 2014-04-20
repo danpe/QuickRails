@@ -8,7 +8,7 @@ from QuickRails.QuickExec import ProcessListener
 class QuickRailsGeneratorsCommand(QuickRailsWindowCommand, ProcessListener):
 
   def is_spring_available(self):
-    return os.path.isfile('spring') and os.access(fpath, os.X_OK)
+    return os.path.isfile('spring') and os.access('spring', os.X_OK)
 
   def run(self):
     self.generators = self.get_available_generators()
