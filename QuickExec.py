@@ -87,14 +87,14 @@ class AsyncProcess(object):
 
     self.listener.on_data(self, self.alldata)
     self.proc.stdout.close()
-    self.proc.stderr.close()
     # self.stdout_thread = None
     # self.stderr_thread = None
     self.proc.terminate()
     sublime.set_timeout(lambda: self.listener.on_finished(self, self.alldata), 0)
 
   def read_stderr(self):
-    print(self.proc.stderr.readlines())
+    pass
+    # print(self.proc.stderr.readlines())
     # for row in self.proc.stderr.readlines():
     #   data += str(row)
     # if data != "":
