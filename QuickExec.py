@@ -94,16 +94,15 @@ class AsyncProcess(object):
     sublime.set_timeout(lambda: self.listener.on_finished(self, self.alldata), 0)
 
   def read_stderr(self):
-    data = ''
-    while True:
-      for row in self.proc.stderr.readlines():
-        data += str(row)
-      if data != "":
-        if self.listener:
-          self.listener.on_data(self, data)
-      else:
-        self.proc.stderr.close()
-        break
+    print(self.proc.stderr.readlines())
+    # for row in self.proc.stderr.readlines():
+    #   data += str(row)
+    # if data != "":
+    #   if self.listener:
+    #     self.listener.on_data(self, data)
+    # else:
+    #   self.proc.stderr.close()
+    #   break
 
 class QuickExecCommand(sublime_plugin.WindowCommand, ProcessListener):
   def run(self, cmd = [], file_regex = "", line_regex = "", working_dir = "",
