@@ -97,7 +97,7 @@ class AsyncProcess(object):
     data = ''
     while True:
       for row in self.proc.stderr.readlines():
-        data += row
+        data += str(row)
       if data != "":
         if self.listener:
           self.listener.on_data(self, data)
