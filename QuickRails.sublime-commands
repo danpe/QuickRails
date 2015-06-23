@@ -14,5 +14,9 @@
   {
     "caption": "QuickRails: Bundle Install",
     "command": "quick_rails_bundle_install"
+  },
+  {
+    "caption": "QuickRails: Goto View",
+    "command": "quick_rails_gotoview"
   }
 ]
