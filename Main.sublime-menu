@@ -1,32 +1,32 @@
 [
   {
-    "caption": "Tools",
-    "mnemonic": "n",
-    "id": "tools",
-    "children":
-    [
-      {
-				"caption": "Quick Rails",
-				"children":
-				[
-					{
-						"caption": "Run generators...",
-						"command": "quick_rails_generators"
-					},
-					{
-						"caption": "Run rake task...",
-						"command": "quick_rails_rake_tasks"
-					},
-          {
-            "caption": "Run capistrano task...",
-            "command": "quick_rails_capistrano_tasks"
-          },
-					{
-						"caption": "Run bundle install...",
-						"command": "quick_rails_bundle_install"
-					}
-				]
-      }
-    ]
+	"caption": "Tools",
+	"mnemonic": "n",
+	"id": "tools",
+	"children":
+	[
+	  {
+			"caption": "Quick Rails",
+			"children":
+			[
+				{
+					"caption": "Run generators...",
+					"command": "quick_rails_generators"
+				},
+				{
+					"caption": "Run rake task...",
+					"command": "quick_rails_rake_tasks"
+				},
+		  		{
+					"caption": "Run capistrano task...",
+					"command": "quick_rails_capistrano_tasks"
+		  		},
+				{
+					"caption": "Run bundle install...",
+					"command": "quick_rails_bundle_install"
+				}
+			]
+	  }
+	]
   }
 ]

@@ -1,5 +1,11 @@
 ## Change Log:
 
+### QuickRails 1.0.7
+#### 2015-07-25
+
+* Fixed support for both ST2/ST3
+* Fixed Bundle Install on Windows
+
 ### QuickRails 1.0.6
 #### 2015-06-23
 

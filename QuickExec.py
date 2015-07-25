@@ -47,13 +47,12 @@ class AsyncProcess(object):
       old_path = os.environ["PATH"]
       # The user decides in the build system whether he wants to append $PATH
       # or tuck it at the front: "$PATH;C:\\new\\path", "C:\\new\\path;$PATH"
-      os.environ["PATH"] = os.path.expandvars(path).encode(sys.getfilesystemencoding())
+      os.environ["PATH"] = os.path.expandvars(path)
 
     proc_env = os.environ.copy()
     proc_env.update(env)
-    # for k, v in proc_env.iteritems():
     for k, v in tuple(proc_env.items()):
-      proc_env[k] = os.path.expandvars(v).encode(sys.getfilesystemencoding())
+      proc_env[k] = os.path.expandvars(v)
 
     self.proc = subprocess.Popen(arg_list, stdout=subprocess.PIPE,
       stderr=subprocess.PIPE, startupinfo=startupinfo, env=proc_env, shell=shell)

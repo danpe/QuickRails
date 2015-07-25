@@ -29,6 +29,12 @@ Configure the following options in `QuickRails.sublime-settings` file in order t
 
 ## Change Log:
 
+### QuickRails 1.0.7
+#### 2015-07-25
+
+* Fixed support for both ST2/ST3
+* Fixed Bundle Install on Windows
+
 ### QuickRails 1.0.6
 #### 2015-06-23
 
@@ -40,12 +46,6 @@ Configure the following options in `QuickRails.sublime-settings` file in order t
 #### 2014-04-20
 
 * Added ST3 Support
-
-### QuickRails 1.0.4
-#### 2013-06-20
-
-* Added RVM & RBENV support!
-* Added Quick Capistrano Tasks!
 
 
 ### credits:

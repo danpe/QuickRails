@@ -2,8 +2,12 @@ import os
 import re
 
 import sublime
-from QuickRails.QuickRails import QuickRailsWindowCommand, get_idea
-from QuickRails.QuickExec import ProcessListener
+try:
+  from QuickRails.QuickRails import QuickRailsWindowCommand, get_idea
+  from QuickRails.QuickExec import ProcessListener
+except Exception:
+  from .QuickRails import QuickRailsWindowCommand, get_idea
+  from .QuickExec import ProcessListener
 
 class QuickRailsGeneratorsCommand(QuickRailsWindowCommand, ProcessListener):
 

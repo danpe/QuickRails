@@ -2,7 +2,10 @@ import sublime, sublime_plugin
 import re
 import os, sys
 import time
-import QuickRails.QuickExec
+try:
+  import QuickRails.QuickExec
+except Exception:
+  from .QuickExec import QuickExecCommand
 
 rails_root_cache = {}
 
@@ -45,8 +48,8 @@ def get_idea(directory):
   return os.path.join(root, '.idea')
 
 def command_with_ruby_env(cmd):
-  rvm = os.path.expanduser('~/.rvm/bin/rvm-auto-ruby')
-  rbenv = os.path.expanduser('~/.rbenv/bin/rbenv')
+  rvm = os.path.expanduser('~'+os.sep+'.rvm'+os.sep+'bin'+os.sep+'rvm-auto-ruby')
+  rbenv = os.path.expanduser('~'+os.sep+'.rbenv'+os.sep+'bin'+os.sep+'rbenv')
   s = sublime.load_settings("QuickRails.sublime-settings")
 
   if s.get("check_for_rvm"):
@@ -55,8 +58,6 @@ def command_with_ruby_env(cmd):
     return rbenv + ' exec ' + cmd
   else:
     return cmd
-
-
 
 class QuickRailsWindowCommand(sublime_plugin.WindowCommand):
   # def run(self, view, args):

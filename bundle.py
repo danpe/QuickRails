@@ -2,8 +2,10 @@ import os
 import re
 
 import sublime
-from QuickRails.QuickRails import QuickRailsWindowCommand, rails_root
-#import add
+try:
+	from QuickRails.QuickRails import QuickRailsWindowCommand, rails_root
+except Exception:
+	from .QuickRails import QuickRailsWindowCommand, rails_root
 
 class QuickRailsBundleInstallCommand(QuickRailsWindowCommand):
   def run(self):
